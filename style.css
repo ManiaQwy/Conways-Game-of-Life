@@ -1,0 +1,25 @@
+#grid{
+    display: grid;
+    grid-template-columns: repeat(100, 1fr);
+    grid-template-rows: repeat(100, 1fr);
+    width: 100vw;
+    height: 100vh;
+    row-gap: 1rem;
+    column-gap: 1rem;
+}
+
+.dead{
+    background-color: gray;
+    height: 50px;
+    width: 50px;
+}
+
+.alive{
+    background-color: yellow;
+    height: 50px;
+    width: 50px;
+}
+
+button{
+    margin: 1rem;
+}
