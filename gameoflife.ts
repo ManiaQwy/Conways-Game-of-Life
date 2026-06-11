@@ -44,16 +44,16 @@ let Create = (): void =>{
 Create();
 
 
-function Restart(): void{
-    mainarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
-    swaparray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
-    for (let i = 0; i < arrayLen; i++) {
-        for (let j = 0; j < arrayLen; j++) {
-            mainarray[i][j] = false;
-            swaparray[i][j] = false;
-            document.getElementById(i + "_" + j)?.setAttribute("class", "dead");
-        } 
-    }
+function Restart(): void {
+    Stop();
+    mainarray = Array.from({ length: arrayLen }, () =>
+        Array(arrayLen).fill(false)
+    );
+    swaparray = Array.from({ length: arrayLen }, () =>
+        Array(arrayLen).fill(false)
+    );
+    const cells = document.querySelectorAll("#grid div");
+    cells.forEach(c => (c.className = "dead"));
 }
 
 function EvaluateCell(x: number, y: number, macierz: boolean[][]): boolean {
@@ -113,6 +113,19 @@ function ReplaceArrays(): void{
     }
 }
 
+function ResizeBoard(newSize: number): void {
+    Stop();
+    arrayLen = newSize;
+    mainarray = Array.from({ length: arrayLen }, () =>
+        Array(arrayLen).fill(false)
+    );
+
+    swaparray = Array.from({ length: arrayLen }, () =>
+        Array(arrayLen).fill(false)
+    );
+
+    Create();
+}
 
 let intervalId: any;
 

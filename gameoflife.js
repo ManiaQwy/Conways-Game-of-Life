@@ -30,15 +30,11 @@ let Create = () => {
 };
 Create();
 function Restart() {
+    Stop();
     mainarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
     swaparray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
-    for (let i = 0; i < arrayLen; i++) {
-        for (let j = 0; j < arrayLen; j++) {
-            mainarray[i][j] = false;
-            swaparray[i][j] = false;
-            document.getElementById(i + "_" + j)?.setAttribute("class", "dead");
-        }
-    }
+    const cells = document.querySelectorAll("#grid div");
+    cells.forEach(c => (c.className = "dead"));
 }
 function EvaluateCell(x, y, macierz) {
     let neighborSum = 0;
@@ -89,6 +85,13 @@ function ReplaceArrays() {
             }
         }
     }
+}
+function ResizeBoard(newSize) {
+    Stop();
+    arrayLen = newSize;
+    mainarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
+    swaparray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
+    Create();
 }
 let intervalId;
 document.getElementById("timer")?.addEventListener("input", () => {
