@@ -1,14 +1,20 @@
-const arrayLen = 100;
+let arrayLen = 100;
 let mainarray;
 let swaparray;
-let emptyarray;
+let refreshRate = 500;
 mainarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
-emptyarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
 swaparray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
 const rowmoves = [1, -1, 0];
 const colmoves = [1, -1, 0];
+let dfrag;
 let Create = () => {
-    const dfrag = document.createDocumentFragment();
+    const grid = document.getElementById("grid");
+    if (!grid)
+        return;
+    grid.style.gridTemplateColumns = `repeat(${arrayLen}, 3rem)`;
+    grid.style.gridTemplateRows = `repeat(${arrayLen}, 3rem)`;
+    grid.innerHTML = "";
+    dfrag = document.createDocumentFragment();
     for (let i = 0; i < arrayLen; i++) {
         for (let j = 0; j < arrayLen; j++) {
             const div = document.createElement('div');
@@ -24,12 +30,13 @@ let Create = () => {
 };
 Create();
 function Restart() {
-    mainarray = emptyarray;
-    swaparray = emptyarray;
+    mainarray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
+    swaparray = Array.from({ length: arrayLen }, () => Array(arrayLen).fill(false));
     for (let i = 0; i < arrayLen; i++) {
         for (let j = 0; j < arrayLen; j++) {
             mainarray[i][j] = false;
             swaparray[i][j] = false;
+            document.getElementById(i + "_" + j)?.setAttribute("class", "dead");
         }
     }
 }
@@ -53,12 +60,13 @@ function EvaluateCell(x, y, macierz) {
     return neighborSum === 2 || neighborSum === 3;
 }
 function Select(x, y) {
-    mainarray[x][y] = true;
     if (document.getElementById(x + "_" + y)?.className == "dead") {
         document.getElementById(x + "_" + y)?.setAttribute("class", "alive");
+        mainarray[x][y] = true;
     }
     else {
         document.getElementById(x + "_" + y)?.setAttribute("class", "dead");
+        mainarray[x][y] = false;
     }
 }
 function ReplaceArrays() {
@@ -82,22 +90,42 @@ function ReplaceArrays() {
         }
     }
 }
-let state = true;
 let intervalId;
+document.getElementById("timer")?.addEventListener("input", () => {
+    const timer = document.getElementById("timer");
+    if (!timer)
+        return;
+    refreshRate = parseInt(timer.value || "0");
+    Swap();
+});
+document.getElementById("size")?.addEventListener("change", () => {
+    arrayLen = parseInt(document.getElementById("size")?.value);
+    console.log(refreshRate);
+    Create();
+});
 function Swap() {
-    state != state;
-    if (state) {
-        intervalId = setInterval(() => {
-            ReplaceArrays();
-        }, 1000);
-    }
-    else {
-        clearInterval(intervalId);
-    }
+    Stop();
+    intervalId = setInterval(() => {
+        ReplaceArrays();
+    }, refreshRate);
 }
 ;
+function Stop() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+}
 document.getElementById("start")?.addEventListener("click", () => {
     Swap();
 });
+document.getElementById("stop")?.addEventListener("click", () => {
+    Stop();
+});
+document.getElementById("reset")?.addEventListener("click", () => {
+    Stop();
+    Restart();
+});
 export {};
+//console.log(intervalId === true)
 //# sourceMappingURL=gameoflife.js.map
