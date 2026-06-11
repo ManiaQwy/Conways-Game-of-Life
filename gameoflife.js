@@ -103,7 +103,8 @@ document.getElementById("timer")?.addEventListener("input", () => {
 });
 document.getElementById("size")?.addEventListener("change", () => {
     arrayLen = parseInt(document.getElementById("size")?.value);
-    console.log(refreshRate);
+    console.log(arrayLen);
+    ResizeBoard(arrayLen);
     Create();
 });
 function Swap() {

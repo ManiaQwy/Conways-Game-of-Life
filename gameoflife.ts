@@ -63,12 +63,9 @@ function EvaluateCell(x: number, y: number, macierz: boolean[][]): boolean {
         for (let j = 0; j < colmoves.length; j++) {
 
             if (rowmoves[i] === 0 && colmoves[j] === 0) continue;
-
             const nx = x + rowmoves[i];
             const ny = y + colmoves[j];
-
             if (nx < 0 || ny < 0 || nx >= arrayLen || ny >= arrayLen) continue;
-
             if (macierz[nx][ny]) neighborSum++;
         }
     }
@@ -119,7 +116,6 @@ function ResizeBoard(newSize: number): void {
     mainarray = Array.from({ length: arrayLen }, () =>
         Array(arrayLen).fill(false)
     );
-
     swaparray = Array.from({ length: arrayLen }, () =>
         Array(arrayLen).fill(false)
     );
@@ -138,7 +134,8 @@ document.getElementById("timer")?.addEventListener("input", () => {
 
 document.getElementById("size")?.addEventListener("change", () => {
     arrayLen = parseInt((document.getElementById("size") as HTMLInputElement)?.value);
-    console.log(refreshRate);
+    console.log(arrayLen);
+    ResizeBoard(arrayLen);
     Create();
 });
 

@@ -5,6 +5,9 @@
     row-gap: 1rem;
     column-gap: 1rem;
 }
+body{
+    background-color: black;
+}
 
 .dead{
     background-color: gray;
@@ -40,4 +43,12 @@ button{
 
 h1{
     font-size: 3rem;
+}
+
+h1, p{
+    color: aliceblue;
+}
+
+b{
+    color: red;
 }
