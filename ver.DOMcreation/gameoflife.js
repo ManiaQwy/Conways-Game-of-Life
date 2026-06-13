@@ -11,8 +11,8 @@ let Create = () => {
     const grid = document.getElementById("grid");
     if (!grid)
         return;
-    grid.style.gridTemplateColumns = `repeat(${arrayLen}, 3rem)`;
-    grid.style.gridTemplateRows = `repeat(${arrayLen}, 3rem)`;
+    grid.style.gridTemplateColumns = `repeat(${arrayLen}, 2rem)`;
+    grid.style.gridTemplateRows = `repeat(${arrayLen}, 2rem)`;
     grid.innerHTML = "";
     dfrag = document.createDocumentFragment();
     for (let i = 0; i < arrayLen; i++) {
